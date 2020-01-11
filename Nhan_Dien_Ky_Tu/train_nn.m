@@ -16,22 +16,22 @@ if nargout
 else
     gui_mainfcn(gui_State, varargin{:});
 end
-% End initialization code - DO NOT EDIT
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% --- Executes just before train_nn is made visible.
+% thuc thi train.
 function train_nn_OpeningFcn(hObject, eventdata, handles, varargin)
 
-% Choose default command line output for train_nn
+% chon dau ra cho train_nn
 handles.output = hObject;
 
-% Update handles structure
+% cap nhat cau truc xu ly
 guidata(hObject, handles);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% --- Outputs from this function are returned to the command line.
+% dau ra cua cac chuc nang duoc tra ve dong lenh
 function varargout = train_nn_OutputFcn(hObject, eventdata, handles) 
 
 varargout{1} = handles.output;
@@ -44,7 +44,7 @@ function edit1_Callback(hObject, eventdata, handles)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% --- Executes during object creation, after setting all properties.
+% thuc thi khi tao doi tuong, sau khi thiet lap cac thuoc tinh.
 function edit1_CreateFcn(hObject, eventdata, handles)
 
 if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
@@ -53,8 +53,8 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Add New Word to Dictionary
-% --- Executes on button press in pushbutton1.
+%Them tu moi vao tu dien
+
 function pushbutton1_Callback(hObject, eventdata, handles)
 
 global selected_col;
@@ -84,7 +84,7 @@ if size(new_word,2) > 0
             all_img_3{size(all_img_3,2)+1} = img{3};
             all_img_4{size(all_img_4,2)+1} = img{4};
             all_words{size(all_words,2)+1} = {new_word};
-            %Word Added Successfully
+            %Them tu thanh cong
             set(handles.edit1, 'string','');
             wrod_successfully_added;
         end
@@ -151,10 +151,10 @@ if size(out,2) > 0
     for xxx = 1:selected_ln
         T = [T eye(size(all_img_1,2))];
     end
-    %% Creating and training of the Neural Network
+    %% tao mang neural
     net = createnn(P,T);
     handles.net = net;
-    %% Testing the Neural Network
+    %% kiem tra mang neural
     assignin('base','net',net);
     guidata(hObject, handles);
     %save NN ALL
@@ -166,8 +166,8 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Initalizer Function - load images words
-% --- Executes during object creation, after setting all properties.
+%Initalizer Function - tai tu hinh anh
+
 function figure1_CreateFcn(hObject, eventdata, handles)
 
 movegui(hObject,'center');
@@ -194,8 +194,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Show all Dictionary Images
-% --- Executes on button press in pushbutton5.
+% Hien thi tat cac hinh anh tron tu dien
 function pushbutton5_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
@@ -218,6 +217,4 @@ end
 
 % --------------------------------------------------------------------
 function Untitled_1_Callback(hObject, eventdata, handles)
-% hObject    handle to Untitled_1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+

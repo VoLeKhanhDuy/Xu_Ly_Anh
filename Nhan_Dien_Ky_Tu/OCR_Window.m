@@ -17,16 +17,15 @@ else
     gui_mainfcn(gui_State, varargin{:});
 end
 
-% End initialization code - DO NOT EDIT
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% --- Executes just before OCR_Window is made visible.
+% hien thi OCR.
 function OCR_Window_OpeningFcn(hObject, eventdata, handles, varargin)
-% This function has no output args, see OutputFcn.
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
-% varargin   command line arguments to OCR_Window (see VARARGIN)
+% hObject: xu ly hinh anh
+% eventdata: xac dinh phien ban matlab
+% handles    xu ly cau truc va du lieu nguoi dung ( GUIDATA)
+% varargin   doi so dong lenh den OCR_Window (VARARGIN)
 set(hObject,'Name','Arabic OCR Project');
 movegui(hObject,'center');
 global net;
@@ -38,36 +37,30 @@ if exist('DataBase.mat','file') == 2
 else
     error_no_nn_exist;
 end
-% Choose default command line output for OCR_Window
+% chon dau ra cho OCR_Window
 
 handles.output = hObject;
 guidata(hObject, handles);
-% Update handles structure
 
 
-% UIWAIT makes OCR_Window wait for user response (see UIRESUME)
-% uiwait(handles.figure1);
+% ( UIRESUME)
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% --- Outputs from this function are returned to the command line.
+% dau ra cua ham dc tra ve dong lenh.
 function varargout = OCR_Window_OutputFcn(hObject, eventdata, handles) 
-% varargout  cell array for returning output args (see VARARGOUT);
-% hObject    handle to figure
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
 
-% Get default command line output from handles structure
+
+% nhan dau ra
 varargout{1} = handles.output;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%“— «·«” ⁄—«÷
-% --- Executes on button press in pushbutton1.
+
+% thuc hien khi bam nut lua chon anh.
 function pushbutton1_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton1 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
 [filename, pathname] = uigetfile({'*.bmp;*.jpg;*.gif;*.png';'*.*'}, 'Anh co trong file','Tests/');
 if pathname ~= 0
     S = imread([pathname,filename]);
@@ -78,12 +71,11 @@ if pathname ~= 0
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%“— «· „ÌÌ“
-% --- Executes on button press in pushbutton2.
+
+% bam nut vao xu ly.
 function pushbutton2_Callback(hObject, eventdata, handles)
-% hObject    handle to pushbutton2 (see GCBO)
-% eventdata  reserved - to be defined in a future version of MATLAB
-% handles    structure with handles and user data (see GUIDATA)
+
+
 global net;
 global all_words;
 try
@@ -139,13 +131,13 @@ try
     for cnt = 1:size(Ibox,2)
         rectangle('position',Ibox(:,cnt),'edgecolor','r');
         img{cnt} = imcrop(Ibw,Ibox(:,cnt));
-        %pre-process
+        %tien xu ly
         bw2 = charcrop(img{cnt});
         %------------
-        %Feature Extraction
+        %khai thac tinh nang
         charvec = figresize(bw2);
         %------------
-        %Recognize
+        % xac nhan
         result = sim(net,charvec);
         if sum(ones(size(result))-result<=0.05) == 1 && sum(result >= 0.1) == 1 %<=0.05 ; >=0.2 ==1 0.04 0.09
             [val, num] = max(result);
