@@ -26,11 +26,14 @@ function OCR_Window_OpeningFcn(hObject, eventdata, handles, varargin)
 % eventdata: xac dinh phien ban matlab
 % handles    xu ly cau truc va du lieu nguoi dung ( GUIDATA)
 % varargin   doi so dong lenh den OCR_Window (VARARGIN)
+
+%thuoc tinh name duoc xac dinh boi hObject '': oject la 1 vecto
 set(hObject,'Name','Arabic OCR Project');
+%%di chuyen hobject den vi tri center
 movegui(hObject,'center');
 global net;
 global all_words;
-if exist('DataBase.mat','file') == 2
+if exist('DataBase.mat','file') == 2 %tap tin mo rong .m, .mlx ho?c .mlapp
     saved_items = load('DataBase.mat','-mat');
     all_words = saved_items.all_words;
     net = saved_items.net;
@@ -60,11 +63,11 @@ varargout{1} = handles.output;
 
 % thuc hien khi bam nut lua chon anh.
 function pushbutton1_Callback(hObject, eventdata, handles)
-
+% chi dinh tep mac dinh
 [filename, pathname] = uigetfile({'*.bmp;*.jpg;*.gif;*.png';'*.*'}, 'Anh co trong file','Tests/');
 if pathname ~= 0
     S = imread([pathname,filename]);
-    axes(handles.axes1);
+    axes(handles.axes1); %% truc x, y
     imshow(S);
     handles.S = S;
     guidata(hObject, handles);
@@ -129,7 +132,7 @@ try
     fid = fopen('Arabic_output.txt', 'w', 'n', 'UTF-8');
     current_line = line(1);
     for cnt = 1:size(Ibox,2)
-        rectangle('position',Ibox(:,cnt),'edgecolor','r');
+        rectangle('position',Ibox(:,cnt),'edgecolor','r'); %% do cong cua hinh chu nhat
         img{cnt} = imcrop(Ibw,Ibox(:,cnt));
         %tien xu ly
         bw2 = charcrop(img{cnt});
@@ -143,10 +146,10 @@ try
             [val, num] = max(result);
             str = char(all_words{num});
         else
-            str = '?';
+            str = 'Ky tu chua duoc hoc';
         end
         if current_line == line(cnt)
-            fwrite(fid,' ', 'char');
+            fwrite(fid,'Ky tu nhan dang duoc la: ', 'char');
         else
             str1 = char(13);
             fwrite(fid, str1, 'char');
